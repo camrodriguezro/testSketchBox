@@ -4,10 +4,15 @@ import java.awt.Dimension;
 import static java.awt.EventQueue.invokeLater;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.FileWriter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -26,11 +31,11 @@ public class Box extends JFrame{
     private JPanel Container = new JPanel();
     
     private JButton sendButton = new JButton();
-    private JButton rate5 = new JButton();
-    private JButton rate4 = new JButton();
-    private JButton rate3 = new JButton();
-    private JButton rate2 = new JButton();
-    private JButton rate1 = new JButton();
+    private JButton rate5 = new JButton("5");
+    private JButton rate4 = new JButton("4");
+    private JButton rate3 = new JButton("3");
+    private JButton rate2 = new JButton("2");
+    private JButton rate1 = new JButton("1");
     private JButton opinionImage = new JButton();
     
     private JLabel createdBy = new JLabel();
@@ -42,6 +47,8 @@ public class Box extends JFrame{
     private JLabel version = new JLabel();
 
     private JTextField commentArea = new JTextField();
+    private FileWriter writer;
+    
     private JComboBox<String> languageSelector = new JComboBox<String>();
     private Locale language = new Locale("en","EN");
     private ResourceBundle translator = ResourceBundle.getBundle("MessagesBundle",language);
@@ -52,14 +59,14 @@ public class Box extends JFrame{
                        
     private void initComponents() {
 
-        GroupLayout jPanel1Layout = new GroupLayout(Container);
-        Container.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        GroupLayout ContainerLayout = new GroupLayout(Container);
+        Container.setLayout(ContainerLayout);
+        ContainerLayout.setHorizontalGroup(
+            ContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        ContainerLayout.setVerticalGroup(
+            ContainerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
@@ -68,12 +75,12 @@ public class Box extends JFrame{
         setResizable(false);
         setSize(new Dimension(400, 400));
 
-        rate5.setIcon(new ImageIcon(getClass().getResource("/ops/smiley.png")));
-        rate4.setIcon(new ImageIcon(getClass().getResource("/ops/ok.png")));
-        rate3.setIcon(new ImageIcon(getClass().getResource("/ops/nothing.png")));
-        rate2.setIcon(new ImageIcon(getClass().getResource("/ops/shutted up.png")));
-        rate1.setIcon(new ImageIcon(getClass().getResource("/ops/death.png")));
-        opinionImage.setIcon(new ImageIcon(getClass().getResource("/ops/Rated5.png")));
+        rate5.setIcon(new ImageIcon(getClass().getResource("/Resources/smiley.png")));
+        rate4.setIcon(new ImageIcon(getClass().getResource("/Resources/ok.png")));
+        rate3.setIcon(new ImageIcon(getClass().getResource("/Resources/nothing.png")));
+        rate2.setIcon(new ImageIcon(getClass().getResource("/Resources/shutted up.png")));
+        rate1.setIcon(new ImageIcon(getClass().getResource("/Resources/death.png")));
+        opinionImage.setIcon(new ImageIcon(getClass().getResource("/Resources/Rated5.png")));
 
         createdBy.setText("Created by: ");
         person1.setText("Carlos Rodriguez (@camrodriguezro)");
@@ -84,53 +91,20 @@ public class Box extends JFrame{
         sendButton.setText("Send!");
         version.setText("V1.2.3");
         
-        rate5.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-
-        rate4.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-
-        rate3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
-
-        rate1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-
-        commentArea.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-
-
         languageSelector.setModel(new DefaultComboBoxModel<>(new String[] { "English", "Español", "Francais"}));
         languageSelector.setSelectedItem("English");
 
-                languageSelector.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                languageSelectorActionPerformed(evt);
-            }
-        });
+        sendButton.addActionListener(new OpinionListener(sendButton, commentArea));
         
-        opinionImage.addActionListener(new ActionListener() {
+        rate5.addMouseListener(new ReviewListener(rate5));
+        rate4.addMouseListener(new ReviewListener(rate4));
+        rate3.addMouseListener(new ReviewListener(rate3));
+        rate2.addMouseListener(new ReviewListener(rate2));
+        rate1.addMouseListener(new ReviewListener(rate1));
+
+        languageSelector.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                changeLanguage(evt);
             }
         });
 
@@ -227,31 +201,7 @@ public class Box extends JFrame{
         setLocationRelativeTo(null);
     }                   
 
-    private void jButton4ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jButton6ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jTextField1ActionPerformed(ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
-
-    private void jButton3ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jButton7ActionPerformed(ActionEvent evt) {                                         
-        // TODO add your handling code here:
-    }                                        
-
-    private void jButton2ActionPerformed(ActionEvent evt) {                                         
-        
-    }                                        
-
-    private void languageSelectorActionPerformed(ActionEvent evt) {                                           
+    private void changeLanguage(ActionEvent evt) {                                           
         String idiom = (String)languageSelector.getSelectedItem();
         if(idiom == null || idiom.isEmpty()){
             language = new Locale("en","EN");
