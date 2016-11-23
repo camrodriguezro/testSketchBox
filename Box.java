@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import static java.awt.EventQueue.invokeLater;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -21,24 +23,28 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.WindowConstants;
 
 public class Box extends JFrame{
+    private JPanel Container = new JPanel();
+    
+    private JButton sendButton = new JButton();
+    private JButton rate5 = new JButton();
+    private JButton rate4 = new JButton();
+    private JButton rate3 = new JButton();
+    private JButton rate2 = new JButton();
+    private JButton rate1 = new JButton();
+    private JButton opinionImage = new JButton();
+    
+    private JLabel createdBy = new JLabel();
+    private JLabel person1 = new JLabel();
+    private JLabel person2 = new JLabel();
+    private JLabel rights = new JLabel();
+    private JLabel madeIn = new JLabel();
+    private JLabel commentLabel = new JLabel();
+    private JLabel version = new JLabel();
 
-    private JButton jButton1 = new JButton();
-    private JButton jButton2 = new JButton();
-    private JButton jButton3 = new JButton();
-    private JButton jButton4 = new JButton();
-    private JButton jButton5 = new JButton();
-    private JButton jButton6 = new JButton();
-    private JButton jButton7 = new JButton();
-    private JComboBox<String> jComboBox1 = new JComboBox<String>();
-    private JLabel jLabel2 = new JLabel();
-    private JLabel jLabel3 = new JLabel();
-    private JLabel jLabel4 = new JLabel();
-    private JLabel jLabel5 = new JLabel();
-    private JLabel jLabel6 = new JLabel();
-    private JLabel jLabel7 = new JLabel();
-    private JLabel jLabel8 = new JLabel();
-    private JPanel jPanel1 = new JPanel();
-    private JTextField jTextField1 = new JTextField();
+    private JTextField commentArea = new JTextField();
+    private JComboBox<String> languageSelector = new JComboBox<String>();
+    private Locale language = new Locale("en","EN");
+    private ResourceBundle translator = ResourceBundle.getBundle("MessagesBundle",language);
     
     public Box() {
         initComponents();
@@ -46,8 +52,8 @@ public class Box extends JFrame{
                        
     private void initComponents() {
 
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
+        GroupLayout jPanel1Layout = new GroupLayout(Container);
+        Container.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
@@ -62,83 +68,87 @@ public class Box extends JFrame{
         setResizable(false);
         setSize(new Dimension(400, 400));
 
-        jButton1.setText("Send!");
+        rate5.setIcon(new ImageIcon(getClass().getResource("/ops/smiley.png")));
+        rate4.setIcon(new ImageIcon(getClass().getResource("/ops/ok.png")));
+        rate3.setIcon(new ImageIcon(getClass().getResource("/ops/nothing.png")));
+        rate2.setIcon(new ImageIcon(getClass().getResource("/ops/shutted up.png")));
+        rate1.setIcon(new ImageIcon(getClass().getResource("/ops/death.png")));
+        opinionImage.setIcon(new ImageIcon(getClass().getResource("/ops/Rated5.png")));
 
-        jButton2.setIcon(new ImageIcon(getClass().getResource("/ops/smiley.png"))); // NOI18N
-        jButton2.addActionListener(new ActionListener() {
+        createdBy.setText("Created by: ");
+        person1.setText("Carlos Rodriguez (@camrodriguezro)");
+        person2.setText("Daniel Zuñiga (@dfzunigah)");
+        rights.setText("All rights reserved - 2016");
+        madeIn.setText("Coded with ❤ in Bogotá");
+        commentLabel.setText("Write your comments here...");
+        sendButton.setText("Send!");
+        version.setText("V1.2.3");
+        
+        rate5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setIcon(new ImageIcon(getClass().getResource("/ops/ok.png"))); // NOI18N
-        jButton3.addActionListener(new ActionListener() {
+
+        rate4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setIcon(new ImageIcon(getClass().getResource("/ops/nothing.png"))); // NOI18N
-        jButton4.addActionListener(new ActionListener() {
+
+        rate3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setIcon(new ImageIcon(getClass().getResource("/ops/shutted up.png"))); // NOI18N
 
-        jButton6.setIcon(new ImageIcon(getClass().getResource("/ops/death.png"))); // NOI18N
-        jButton6.addActionListener(new ActionListener() {
+        rate1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Created by: ");
-
-        jTextField1.addActionListener(new ActionListener() {
+        commentArea.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Carlos Rodriguez (@camrodriguezro)");
 
-        jLabel4.setText("All rights reserved - 2016");
 
-        jLabel5.setText("Write your comments here...");
+        languageSelector.setModel(new DefaultComboBoxModel<>(new String[] { "English", "Español", "Francais"}));
+        languageSelector.setSelectedItem("English");
 
-        jLabel6.setText("V1.2.3");
-
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] { "English", "Español", "Francais"}));
-
-        jButton7.setIcon(new ImageIcon(getClass().getResource("/ops/Rated5.png"))); // NOI18N
-        jButton7.addActionListener(new ActionListener() {
+                languageSelector.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                languageSelectorActionPerformed(evt);
+            }
+        });
+        
+        opinionImage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
-        jLabel7.setText("Coded with ❤ in Bogotá");
-
-        jLabel8.setText("Daniel Zuñiga (@dfzunigah)");
-
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2))
+                        .addComponent(createdBy))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4))))
+                            .addComponent(person2)
+                            .addComponent(person1)
+                            .addComponent(madeIn)
+                            .addComponent(rights))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -147,72 +157,71 @@ public class Box extends JFrame{
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
+                                    .addComponent(commentLabel)
                                     .addGap(116, 116, 116)
-                                    .addComponent(jButton7, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(opinionImage, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+                                .addComponent(commentArea, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rate5, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rate4, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rate3, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rate2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rate1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 33, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(sendButton)
                                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel6))))))
+                                        .addComponent(version))))))
                     .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(languageSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jComboBox1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(languageSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
-                .addComponent(jLabel2)
+                .addComponent(createdBy)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(person1)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(person2)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
+                .addComponent(madeIn)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(rights)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5))
-                    .addComponent(jButton7, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(commentLabel))
+                    .addComponent(opinionImage, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                .addComponent(commentArea, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rate4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rate5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rate3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rate2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rate1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jButton1)
+                        .addComponent(sendButton)
                         .addGap(81, 81, 81))
                     .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
+                        .addComponent(version)
                         .addGap(68, 68, 68))))
         );
 
-        jTextField1.getAccessibleContext().setAccessibleName("");
+        commentArea.getAccessibleContext().setAccessibleName("");
 
         pack();
         setLocationRelativeTo(null);
@@ -242,6 +251,47 @@ public class Box extends JFrame{
         
     }                                        
 
+    private void languageSelectorActionPerformed(ActionEvent evt) {                                           
+        String idiom = (String)languageSelector.getSelectedItem();
+        if(idiom == null || idiom.isEmpty()){
+            language = new Locale("en","EN");
+            translator = ResourceBundle.getBundle("MessagesBundle",language);
+            this.sendButton.setText(translator.getString("send"));
+            this.commentLabel.setText(translator.getString("comments"));
+            this.createdBy.setText(translator.getString("created"));
+            this.madeIn.setText(translator.getString("coded"));
+            this.rights.setText(translator.getString("rights"));
+            
+        }else if(idiom.equals("English")){
+            language = new Locale("en","EN");
+            translator = ResourceBundle.getBundle("MessagesBundle",language);
+            this.sendButton.setText(translator.getString("send"));
+            this.commentLabel.setText(translator.getString("comments"));
+            this.createdBy.setText(translator.getString("created"));
+            this.madeIn.setText(translator.getString("coded"));
+            this.rights.setText(translator.getString("rights"));
+            
+        }else if(idiom.equals("Español")){
+            language = new Locale("es","ES");
+            translator = ResourceBundle.getBundle("MessagesBundle",language);
+            this.sendButton.setText(translator.getString("send"));
+            this.commentLabel.setText(translator.getString("comments"));
+            this.createdBy.setText(translator.getString("created"));
+            this.madeIn.setText(translator.getString("coded"));
+            this.rights.setText(translator.getString("rights"));
+            
+        }else if(idiom.equals("Francais")){
+            language = new Locale("fr","FR");
+            translator = ResourceBundle.getBundle("MessagesBundle",language);
+            this.sendButton.setText(translator.getString("send"));
+            this.commentLabel.setText(translator.getString("comments"));
+            this.createdBy.setText(translator.getString("created"));
+            this.madeIn.setText(translator.getString("coded"));
+            this.rights.setText(translator.getString("rights"));
+        }
+    
+    }
+    
     public static void main(String args[]) {
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -251,16 +301,18 @@ public class Box extends JFrame{
                 }
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(as.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Box.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(as.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Box.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(as.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Box.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(as.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Box.class.getName()).log(Level.SEVERE, null, ex);
         }
 
        invokeLater(new Runnable() {
+            
+           @Override 
             public void run() {
                 new Box().setVisible(true);
             }
